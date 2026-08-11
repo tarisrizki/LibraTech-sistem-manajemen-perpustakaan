@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>LibraTech - Manajemen Perpustakaan</title>
+    @fluxAppearance
     @vite(['resources/css/app.css','resources/js/app.js'])
     @livewireStyles
 </head>
@@ -48,6 +49,7 @@
 
     <main class="max-w-[1280px] mx-auto px-4 lg:px-6 py-6 lg:py-8">{{ $slot ?? '' }}@yield('content')</main>
     <footer class="border-t border-zinc-200 mt-12 py-6 text-center text-xs text-zinc-500">LibraTech · Sistem Manajemen Perpustakaan · {{ date('Y') }}</footer>
+    @fluxScripts
     @livewireScripts
 </body>
 </html>
