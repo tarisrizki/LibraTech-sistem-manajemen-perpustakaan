@@ -18,6 +18,7 @@
 >
     {{-- Hero --}}
     <section x-ref="hero" class="rounded-[16px] bg-white border border-[#e2e8f0] shadow-[0_1px_24px_rgba(27,27,36,0.07)] overflow-hidden">
+        <div class="h-[3px] bg-[#3525cd]"></div>
         <div class="grid lg:grid-cols-[1.08fr_0.92fr] items-stretch">
             <div class="p-6 lg:p-7 flex flex-col justify-center gap-3">
                 <h1 class="font-[Literata,ui-serif,Georgia,serif] text-[28px] lg:text-[38px] font-semibold tracking-[-0.02em] leading-[0.98] text-[#1b1b24]">Cari, pinjam, baca.</h1>
@@ -27,8 +28,8 @@
                     <flux:button variant="ghost" href="#featured" class="!rounded-full">Pilihan editor</flux:button>
                 </div>
             </div>
-            <div class="hidden lg:block min-h-[260px] bg-white border-l border-[#c7c4d8] relative overflow-hidden grid place-items-center">
-                <div class="text-center p-8"><p class="font-[Literata,ui-serif,Georgia,serif] text-4xl font-semibold text-[#3525cd]">42</p><p class="text-xs tracking-[0.12em] uppercase text-zinc-500 font-medium mt-1">koleksi terkurasi</p><p class="text-[11px] text-zinc-400 mt-3 max-w-[22ch] mx-auto leading-relaxed">Cover asli per ISBN, saringan cepat.</p></div>
+            <div class="hidden lg:block min-h-[220px] bg-[#fcf8ff]/60 border-l border-[#e2e8f0] relative overflow-hidden grid place-items-center">
+                <div class="text-center p-7"><p class="font-[Literata,ui-serif,Georgia,serif] text-[30px] font-semibold tracking-[-0.02em] text-[#1b1b24]">42</p><p class="text-[11px] tracking-[0.12em] uppercase text-zinc-500 font-medium mt-1">koleksi terkurasi</p><p class="text-[11px] text-zinc-500 mt-2 max-w-[22ch] mx-auto leading-relaxed">Cover asli per ISBN · terkurasi per kategori.</p></div>
             </div>
         </div>
 
