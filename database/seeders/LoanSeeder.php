@@ -63,7 +63,7 @@ class LoanSeeder extends Seeder
                         'approved_by' => $adminId,
                     ],
                     LoanStatus::Rejected => $data += [
-                        'rejection_reason' => fake()->sentence(6),
+                        'rejection_reason' => 'Ditolak: cek syarat peminjaman.',
                         'approved_by' => $adminId,
                     ],
                     LoanStatus::Returned => $data += [
