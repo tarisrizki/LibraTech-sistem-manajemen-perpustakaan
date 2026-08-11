@@ -18,7 +18,7 @@
         decoding="async"
         fetchpriority="{{ $fetchPriority }}"
         onerror="this.style.display='none';this.nextElementSibling?.style?.setProperty('display','grid')"
-    ><div class="hidden w-full h-full place-items-center bg-[#1b1b24] text-[#fcf8ff] p-4 text-center leading-tight" style="display:none"><p class="font-[Literata,ui-serif,Georgia,serif] font-semibold text-sm leading-tight line-clamp-3">{{ $alt }}</p><p class="text-[10px] tracking-[0.12em] uppercase text-white/60 mt-1">LibraTech</p></div>
+    ><div class="hidden w-full h-full place-items-center bg-[#1b1b24] text-[#fcf8ff] p-4 text-center leading-tight" style="display:none"><p class="font-[Literata,ui-serif,Georgia,serif] font-semibold text-sm leading-tight line-clamp-3">{{ $alt }}</p></div>
 @elseif($storageUrl)
     <img
         src="{{ $storageUrl }}"
@@ -37,7 +37,7 @@
         decoding="async"
         fetchpriority="{{ $fetchPriority }}"
         onerror="this.style.display='none';this.nextElementSibling?.style?.setProperty('display','grid')"
-    ><div class="hidden w-full h-full place-items-center bg-[#1b1b24] text-[#fcf8ff] p-4 text-center leading-tight" style="display:none"><p class="font-[Literata,ui-serif,Georgia,serif] font-semibold text-sm leading-tight line-clamp-3">{{ $alt }}</p><p class="text-[10px] tracking-[0.12em] uppercase text-white/60 mt-1">LibraTech</p></div>
+    ><div class="hidden w-full h-full place-items-center bg-[#1b1b24] text-[#fcf8ff] p-4 text-center leading-tight" style="display:none"><p class="font-[Literata,ui-serif,Georgia,serif] font-semibold text-sm leading-tight line-clamp-3">{{ $alt }}</p></div>
 @else
-    <div class="{{ $class }} grid place-items-center bg-[#1b1b24] text-[#fcf8ff] p-4 text-center leading-tight"><p class="font-[Literata,ui-serif,Georgia,serif] font-semibold text-sm leading-tight line-clamp-3">{{ $alt }}</p><p class="text-[10px] tracking-[0.12em] uppercase text-white/60 mt-1">LibraTech</p></div>
+    <div class="{{ $class }} grid place-items-center bg-[#1b1b24] text-[#fcf8ff] p-4 text-center leading-tight"><p class="font-[Literata,ui-serif,Georgia,serif] font-semibold text-sm leading-tight line-clamp-3">{{ $alt }}</p></div>
 @endif
