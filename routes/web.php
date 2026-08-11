@@ -2,18 +2,20 @@
 
 declare(strict_types=1);
 
-use App\Http\Controllers\Admin\BookController as AdminBookController;
-use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\LoanAdminController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\LoanController;
+use App\Livewire\Admin\BookManager;
+use App\Livewire\Admin\CategoryManager;
+use App\Livewire\Admin\LoanManager;
+use App\Livewire\Catalog\Index as CatalogIndex;
+use App\Livewire\Catalog\Show as CatalogShow;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [CatalogController::class, 'index'])->name('catalog.index');
-Route::get('/books/{book}', [CatalogController::class, 'show'])->name('catalog.show');
+Route::get('/', CatalogIndex::class)->name('catalog.index');
+Route::get('/books/{book}', CatalogShow::class)->name('catalog.show');
 
 Route::middleware('guest')->group(function (): void {
     Route::get('/register', [RegisterController::class, 'show'])->name('register');
@@ -33,10 +35,13 @@ Route::middleware('auth')->group(function (): void {
     Route::post('/loans', [LoanController::class, 'store'])->name('loans.store');
 });
 
+// Admin domain — Livewire + Flux (parallel safe: only admin namespace)
+// GET pages via Livewire (BookManager / CategoryManager / LoanManager)
+// POST actions retained via controller for backward compat with existing tests/api
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function (): void {
-    Route::resource('books', AdminBookController::class)->except(['show']);
-    Route::resource('categories', AdminCategoryController::class)->except(['show']);
-    Route::get('/loans', [LoanAdminController::class, 'index'])->name('loans.index');
+    Route::get('/books', BookManager::class)->name('books.index');
+    Route::get('/categories', CategoryManager::class)->name('categories.index');
+    Route::get('/loans', LoanManager::class)->name('loans.index');
     Route::post('/loans/{loan}/approve', [LoanAdminController::class, 'approve'])->name('loans.approve');
     Route::post('/loans/{loan}/reject', [LoanAdminController::class, 'reject'])->name('loans.reject');
     Route::post('/loans/{loan}/return', [LoanAdminController::class, 'return'])->name('loans.return');

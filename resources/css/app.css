@@ -1,9 +1,21 @@
 @import 'tailwindcss';
-
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
+@source '../../vendor/livewire/flux/resources/views/**/*.blade.php';
+@source '../../vendor/livewire/volt/resources/views/**/*.blade.php';
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-sans: 'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Literata', ui-serif, Georgia, serif;
+  --color-primary: #4f46e5;
+  --color-surface: #fcf8ff;
+  --color-ink: #1b1b24;
+  --color-muted: #464555;
+  --color-line: #c7c4d8;
+  --color-line-soft: #e2e8f0;
+  --color-accent2: #82f5c1;
 }
+
+/* stitch roundness + motion baseline */
+:root { --radius-card: 16px; --radius-input: 10px; }
+* { scrollbar-color: #c7c4d8 transparent; }
