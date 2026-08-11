@@ -14,22 +14,21 @@
             });
         }
     }"
-    class="flex flex-col gap-10"
+    class="flex flex-col gap-6"
 >
     {{-- Hero --}}
     <section x-ref="hero" class="rounded-[16px] bg-white border border-[#e2e8f0] shadow-[0_1px_24px_rgba(27,27,36,0.07)] overflow-hidden">
-        <div class="grid lg:grid-cols-2 items-stretch">
-            <div class="p-6 lg:p-8 flex flex-col justify-center gap-4">
-                <p class="text-[11px] tracking-[0.16em] uppercase text-zinc-500 font-medium">LibraTech Katalog</p>
-                <h1 class="font-[Literata,ui-serif,Georgia,serif] text-[28px] lg:text-[40px] font-bold tracking-[-0.02em] leading-[0.95] text-[#1b1b24]">Discover your next read.</h1>
-                <p class="text-[15px] leading-relaxed text-zinc-600 max-w-[52ch]">Jelajahi koleksi kurasi LibraTech. Cari judul atau penulis, saring kategori, dan pinjam ketika stok tersedia.</p>
+        <div class="grid lg:grid-cols-[1.08fr_0.92fr] items-stretch">
+            <div class="p-6 lg:p-7 flex flex-col justify-center gap-3">
+                <h1 class="font-[Literata,ui-serif,Georgia,serif] text-[28px] lg:text-[38px] font-semibold tracking-[-0.02em] leading-[0.98] text-[#1b1b24]">Cari, pinjam, baca.</h1>
+                <p class="text-[14px] leading-relaxed text-zinc-600 max-w-[48ch]">Koleksi terkurasi, cover asli per ISBN, saringan cepat. Pinjam saat stok ada.</p>
                 <div class="flex flex-wrap gap-2 pt-1">
-                    <flux:button variant="primary" href="#browse" class="!rounded-full !bg-[#4f46e5] hover:!bg-[#4338ca]">Browse Full Catalog</flux:button>
-                    <flux:button variant="ghost" href="#featured" class="!rounded-full">View Featured</flux:button>
+                    <flux:button variant="primary" href="#browse" class="!rounded-full !bg-[#3525cd] hover:!bg-[#2b1bb5]">Jelajahi katalog</flux:button>
+                    <flux:button variant="ghost" href="#featured" class="!rounded-full">Pilihan editor</flux:button>
                 </div>
             </div>
-            <div class="hidden lg:block h-[300px] bg-zinc-50 border-l border-[#e2e8f0] relative overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1519682337058-a94d519337bc?q=80&w=1200&auto=format&fit=crop" alt="Library reading room" class="w-full h-full object-cover" loading="lazy">
+            <div class="hidden lg:block min-h-[260px] bg-[#f0ecf9] border-l border-[#e2e8f0] relative overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1519682337058-a94d519337bc?q=80&w=1200&auto=format&fit=crop" alt="" class="w-full h-full object-cover" loading="lazy">
             </div>
         </div>
 
