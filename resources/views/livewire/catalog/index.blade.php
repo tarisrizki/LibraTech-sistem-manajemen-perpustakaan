@@ -77,7 +77,7 @@
                 <flux:card data-stagger class="group !p-0 !rounded-[16px] overflow-hidden hover:shadow-[0_8px_20px_rgba(0,0,0,0.06)] hover:-translate-y-0.5 transition duration-180 flex flex-col">
                     <div class="flex gap-0 flex-1">
                         <div class="w-[42%] shrink-0 bg-zinc-100 relative overflow-hidden">
-                            <x-cover-image :coverWebpUrl="$book->cover_webp_url" :coverPath="$book->cover_path" :isbn="$book->isbn" :alt="$book->title" class="w-full h-full object-cover aspect-[3/4] transform transition duration-300 ease-out group-hover:scale-105" sizes="(max-width:768px) 100vw, 42vw" />
+                            <x-cover-image :coverWebpUrl="$book->cover_webp_url" :coverPath="$book->cover_path" :isbn="$book->isbn" :coverId="$book->cover_id" :alt="$book->title" class="w-full h-full object-cover aspect-[3/4] transform transition duration-300 ease-out group-hover:scale-105" sizes="(max-width:768px) 100vw, 42vw" />
                         </div>
                         <div class="flex-1 min-w-0 p-4 lg:p-5 flex flex-col">
                             <span class="inline-flex items-center gap-1.5 w-fit text-[11px] font-medium rounded-full px-2.5 py-1 border {{ $book->stock > 0 ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-zinc-100 text-zinc-600 border-zinc-200' }}">
@@ -113,7 +113,7 @@
                 <a data-stagger href="{{ route('catalog.show', $book) }}" wire:navigate class="group">
                     <flux:card class="!p-3 !rounded-[16px] h-full hover:border-zinc-300 hover:shadow-sm transition duration-180 flex flex-col">
                         <div class="aspect-[2/3] rounded-xl overflow-hidden bg-zinc-100 relative">
-                            <x-cover-image :coverWebpUrl="$book->cover_webp_url" :coverPath="$book->cover_path" :isbn="$book->isbn" :alt="$book->title" class="w-full h-full object-cover transform transition duration-300 ease-out group-hover:scale-105" sizes="(max-width:768px) 50vw, 25vw" />
+                            <x-cover-image :coverWebpUrl="$book->cover_webp_url" :coverPath="$book->cover_path" :isbn="$book->isbn" :coverId="$book->cover_id" :alt="$book->title" class="w-full h-full object-cover transform transition duration-300 ease-out group-hover:scale-105" sizes="(max-width:768px) 50vw, 25vw" />
                             <span class="absolute top-2 right-2 w-6 h-6 grid place-items-center rounded-full text-[11px] border shadow-sm {{ $book->stock > 0 ? 'bg-emerald-600 text-white border-emerald-600' : 'bg-white text-zinc-500 border-zinc-200' }}">{{ $book->stock > 0 ? '✓' : '·' }}</span>
                         </div>
                         <p class="mt-3 font-semibold text-[13px] leading-tight line-clamp-1 group-hover:text-[#4f46e5] transition">{{ $book->title }}</p>
@@ -147,7 +147,7 @@
                             </div>
                             <div class="flex gap-3 flex-1">
                                 <div class="w-[84px] h-[112px] rounded-xl overflow-hidden bg-zinc-100 shrink-0 border border-[#c7c4d8]">
-                                    <x-cover-image :coverWebpUrl="$book->cover_webp_url" :coverPath="$book->cover_path" :isbn="$book->isbn" :alt="$book->title" class="w-full h-full object-cover transform transition duration-300 ease-out group-hover:scale-105" sizes="(max-width:768px) 100vw, 25vw" />
+                                    <x-cover-image :coverWebpUrl="$book->cover_webp_url" :coverPath="$book->cover_path" :isbn="$book->isbn" :coverId="$book->cover_id" :alt="$book->title" class="w-full h-full object-cover transform transition duration-300 ease-out group-hover:scale-105" sizes="(max-width:768px) 100vw, 25vw" />
                                 </div>
                                 <div class="flex-1 min-w-0">
                                     <h3 class="font-[Literata,ui-serif,Georgia,serif] font-semibold text-[15px] leading-tight line-clamp-2 group-hover:text-[#3525cd] transition text-[#1b1b24]">{{ $book->title }}</h3>

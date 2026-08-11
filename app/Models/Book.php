@@ -31,6 +31,7 @@ class Book extends Model
         'description',
         'cover_path',
         'cover_webp_url',
+        'cover_id',
         'published_year',
     ];
 
@@ -38,6 +39,7 @@ class Book extends Model
     {
         return [
             'stock' => 'integer',
+            'cover_id' => 'integer',
             'published_year' => 'integer',
         ];
     }

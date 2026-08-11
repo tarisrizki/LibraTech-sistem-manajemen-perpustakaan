@@ -15,16 +15,16 @@ class BookSeeder extends Seeder
         $map = Category::pluck('id', 'slug');
 
         $books = [
-            ['title' => 'Bumi', 'author' => 'Tere Liye', 'isbn' => '9786020332956', 'cat' => 'fiksi', 'stock' => 5, 'year' => 2014],
+            ['title' => 'Bumi', 'author' => 'Tere Liye', 'isbn' => '9786020332956', 'cover_id' => 12810708, 'cat' => 'fiksi', 'stock' => 5, 'year' => 2014],
             ['title' => 'Laskar Pelangi', 'author' => 'Andrea Hirata', 'isbn' => '9789793062792', 'cat' => 'fiksi', 'stock' => 3, 'year' => 2005],
             ['title' => 'Perahu Kertas', 'author' => 'Dee Lestari', 'isbn' => '9789791227780', 'cat' => 'fiksi', 'stock' => 4, 'year' => 2009],
-            ['title' => 'Cantik Itu Luka', 'author' => 'Eka Kurniawan', 'isbn' => '9786020336244', 'cat' => 'fiksi', 'stock' => 2, 'year' => 2002],
+            ['title' => 'Cantik Itu Luka', 'author' => 'Eka Kurniawan', 'isbn' => '9786020336244', 'cover_id' => 14846592, 'cat' => 'fiksi', 'stock' => 2, 'year' => 2002],
             ['title' => 'Dilan: Dia Adalah Dilanku Tahun 1990', 'author' => 'Pidi Baiq', 'isbn' => '9786027870413', 'cat' => 'fiksi', 'stock' => 0, 'year' => 2014],
             ['title' => 'Gadis Kretek', 'author' => 'Ratih Kumala', 'isbn' => '9786020333830', 'cat' => 'fiksi', 'stock' => 6, 'year' => 2012],
             ['title' => 'Laut Bercerita', 'author' => 'Leila S. Chudori', 'isbn' => '9786024246945', 'cat' => 'fiksi', 'stock' => 3, 'year' => 2017],
-            ['title' => 'Negeri 5 Menara', 'author' => 'Ahmad Fuadi', 'isbn' => '9789790622386', 'cat' => 'fiksi', 'stock' => 5, 'year' => 2009],
-            ['title' => 'Ayat-Ayat Cinta', 'author' => 'Habiburrahman El Shirazy', 'isbn' => '9789791365104', 'cat' => 'fiksi', 'stock' => 2, 'year' => 2004],
-            ['title' => 'Sang Pemimpi', 'author' => 'Andrea Hirata', 'isbn' => '9789793062112', 'cat' => 'fiksi', 'stock' => 0, 'year' => 2006],
+            ['title' => 'Negeri 5 Menara', 'author' => 'Ahmad Fuadi', 'isbn' => '9789790622386', 'cover_id' => 14303993, 'cat' => 'fiksi', 'stock' => 5, 'year' => 2009],
+            ['title' => 'Ayat-Ayat Cinta', 'author' => 'Habiburrahman El Shirazy', 'isbn' => '9789791365104', 'cover_id' => 9904402, 'cat' => 'fiksi', 'stock' => 2, 'year' => 2004],
+            ['title' => 'Sang Pemimpi', 'author' => 'Andrea Hirata', 'isbn' => '9789793062112', 'cover_id' => 15218349, 'cat' => 'fiksi', 'stock' => 0, 'year' => 2006],
 
             ['title' => 'Sapiens: Riwayat Umat Manusia', 'author' => 'Yuval Noah Harari', 'isbn' => '9786024242987', 'cat' => 'non-fiksi', 'stock' => 4, 'year' => 2011],
             ['title' => 'Atomic Habits', 'author' => 'James Clear', 'isbn' => '9786020652786', 'cat' => 'non-fiksi', 'stock' => 7, 'year' => 2018],
@@ -70,13 +70,14 @@ class BookSeeder extends Seeder
                 continue;
             }
             // ponytail: cover_path null => Blade pakai Open Library per ISBN (real cover, no hardcode); isi storage kalau ada upload
-            Book::firstOrCreate(
+            $book = Book::firstOrCreate(
                 ['isbn' => $b['isbn']],
                 [
                     'category_id' => $catId,
                     'title' => $b['title'],
                     'author' => $b['author'],
                     'stock' => $b['stock'],
+                    'cover_id' => $b['cover_id'] ?? null,
                     'description' => match ($b['isbn']) {
                         '9786020332956' => 'Raib, Seli, Ali berpetualang melintasi klan dan dimensi. Tere Liye meramu fiksi petualangan remaja dengan worldbuilding rapi.',
                         '9789793062792' => '10 anak Belitung melawan keterbatasan lewat sekolah kayu. Andrea Hirata menulis tentang mimpi, guru, dan keteguhan.',
@@ -93,6 +94,9 @@ class BookSeeder extends Seeder
                     'published_year' => $b['year'],
                 ]
             );
+            if (isset($b['cover_id']) && $book->cover_id !== $b['cover_id']) {
+                $book->update(['cover_id' => $b['cover_id']]);
+            }
         }
     }
 }
