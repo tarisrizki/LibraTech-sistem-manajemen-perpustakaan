@@ -30,6 +30,7 @@ class Book extends Model
         'stock',
         'description',
         'cover_path',
+        'cover_webp_url',
         'published_year',
     ];
 

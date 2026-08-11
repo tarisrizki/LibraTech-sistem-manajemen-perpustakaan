@@ -23,7 +23,7 @@ class BookResource extends JsonResource
             'stock' => $this->stock,
             'is_available' => $this->is_available,
             'description' => $this->description,
-            'cover_url' => $this->cover_path ? asset('storage/'.$this->cover_path) : null,
+            'cover_url' => $this->cover_webp_url ?? ($this->cover_path ? asset('storage/'.$this->cover_path) : null),
             'published_year' => $this->published_year,
         ];
     }
