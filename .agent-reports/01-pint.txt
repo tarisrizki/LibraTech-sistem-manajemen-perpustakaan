@@ -1,0 +1,12 @@
+
+  ...........⨯.............⨯..⨯..⨯⨯....⨯.........................................
+
+  ──────────────────────────────────────────────────────────────────────────────────────────────────────────── Laravel  
+    FAIL   .................................................................................. 79 files, 6 style issues  
+  ⨯ app\Http\Controllers\Api\V1\AuthController.php  fully_qualified_strict_types, line_ending, unary_operator_spaces,…  
+  ⨯ app\Http\Requests\UpdateBookRequest.php                 fully_qualified_strict_types, line_ending, ordered_imports  
+  ⨯ app\Http\Resources\LoanResource.php                                                                    line_ending  
+  ⨯ app\Models\Loan.php                                                      fully_qualified_strict_types, line_ending  
+  ⨯ app\Models\User.php                                                      fully_qualified_strict_types, line_ending  
+  ⨯ app\Policies\LoanPolicy.php                                                                            line_ending  
+

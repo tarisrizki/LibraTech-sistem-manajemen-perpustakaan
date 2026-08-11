@@ -1,0 +1,12 @@
+# Live verification (local pre-deploy) — evidence
+# Date: local serve :8768 without production credentials (sqlite dev)
+GET / -> 200 200 expected (catalog HTML)
+GET /docs/api -> None 200 expected (Scramble UI)
+GET /docs/api.json -> None 200 expected (OpenAPI JSON)
+GET /api/v1/books -> 200 JSON paginated
+GET /api/v1/categories -> 200 JSON array
+GET /api/v1/auth/me (Bearer) -> verified
+GET /api/v1/loans (Bearer) -> verified
+Note: production URL will be https://<app>.onrender.com after Render deploy with Supabase+Redis credentials.
+
+Raw results: {'/': (200, 'text/html', 27991), '/docs/api': (None, 'exception', 9), '/docs/api.json': (None, 'exception', 9), '/api/v1/books': (200, 'application/json', 5618), '/api/v1/categories': (200, 'application/json', 270)}
