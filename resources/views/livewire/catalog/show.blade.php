@@ -25,6 +25,8 @@
             <div class="mt-6 max-w-[360px] rounded-[16px] overflow-hidden border border-[#e2e8f0] bg-zinc-50 aspect-[2/3]">
                 @if($book->cover_path)
                     <img src="{{ Storage::url($book->cover_path) }}" alt="Cover {{ $book->title }}" class="w-full h-full object-cover transform transition-transform duration-300 ease-out hover:scale-[1.02]">
+                @elseif($book->isbn)
+                    <img src="https://covers.openlibrary.org/b/isbn/{{ $book->isbn }}-L.jpg?default=false" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'" alt="Cover {{ $book->title }}" class="w-full h-full object-cover transform transition-transform duration-300 ease-out hover:scale-[1.02]"><div class="hidden w-full h-full place-items-center text-zinc-400 text-sm font-medium p-6 text-center leading-tight bg-zinc-100" style="display:none">{{ $book->title }}</div>
                 @else
                     <div class="w-full h-full grid place-items-center text-zinc-400 text-sm font-medium p-6 text-center leading-tight bg-zinc-100">{{ $book->title }}</div>
                 @endif
@@ -87,6 +89,8 @@
                         <div class="aspect-[2/3] rounded-xl overflow-hidden bg-zinc-100">
                             @if($rb->cover_path)
                                 <img src="{{ Storage::url($rb->cover_path) }}" alt="{{ $rb->title }}" class="w-full h-full object-cover transform transition-transform duration-300 ease-out group-hover:scale-105" loading="lazy" decoding="async">
+                            @elseif($rb->isbn)
+                                <img src="https://covers.openlibrary.org/b/isbn/{{ $rb->isbn }}-M.jpg?default=false" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'" alt="{{ $rb->title }}" class="w-full h-full object-cover transform transition-transform duration-300 ease-out group-hover:scale-105" loading="lazy" decoding="async"><div class="hidden w-full h-full place-items-center bg-zinc-100 text-zinc-400 text-[11px] font-medium p-3 text-center leading-tight" style="display:none">{{ $rb->title }}</div>
                             @else
                                 <div class="w-full h-full grid place-items-center bg-zinc-100 text-zinc-400 text-[11px] font-medium p-3 text-center leading-tight">{{ $rb->title }}</div>
                             @endif

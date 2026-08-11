@@ -69,6 +69,7 @@ class BookSeeder extends Seeder
             if (! $catId) {
                 continue;
             }
+            // ponytail: cover_path null => Blade pakai Open Library per ISBN (real cover, no hardcode); isi storage kalau ada upload
             Book::firstOrCreate(
                 ['isbn' => $b['isbn']],
                 [
@@ -76,7 +77,19 @@ class BookSeeder extends Seeder
                     'title' => $b['title'],
                     'author' => $b['author'],
                     'stock' => $b['stock'],
-                    'description' => fake('id_ID')->paragraph(3),
+                    'description' => match ($b['isbn']) {
+                        '9786020332956' => 'Raib, Seli, Ali berpetualang melintasi klan dan dimensi. Tere Liye meramu fiksi petualangan remaja dengan worldbuilding rapi.',
+                        '9789793062792' => '10 anak Belitung melawan keterbatasan lewat sekolah kayu. Andrea Hirata menulis tentang mimpi, guru, dan keteguhan.',
+                        '9786024246945' => 'Kisah aktivis 1998 dan keluarga yang menunggu jawaban. Leila Chudori menautkan sejarah dan trauma dengan bahasa jernih.',
+                        '9786020652786' => 'Perubahan kecil yang konsisten mengalahkan motivasi besar sesaat. James Clear memberi sistem kebiasaan yang praktis.',
+                        '9786024242987' => 'Dari sapiens pemburu ke jaringan global. Harari merangkum evolusi sosial manusia dengan argumen tajam.',
+                        '9780132350884' => 'Prinsip menulis kode yang mudah dibaca dan dirawat. Rujukan wajib untuk refactoring dan craftsmanship.',
+                        '9780553380163' => 'Hawking menjelaskan asal semesta dengan analogi ringan. Pengantar kosmologi untuk pembaca umum.',
+                        '9780345539437' => 'Carl Sagan menuntun dari atom ke galaksi. Sains sebagai cara melihat, bukan sekadar fakta.',
+                        '9781451648539' => 'Biografi intens tentang obsesi produk dan kepemimpinan. Isaacson merunut sisi terang dan gelap Jobs.',
+                        '9781524763138' => 'Dari South Side Chicago ke Gedung Putih. Michelle Obama menulis tentang identitas, kerja, dan keluarga.',
+                        default => $b['title'].' karya '.$b['author'].' terbit '.$b['year'].'. Koleksi LibraTech untuk kategori '.$b['cat'].'.',
+                    },
                     'published_year' => $b['year'],
                 ]
             );

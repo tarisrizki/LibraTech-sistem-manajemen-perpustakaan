@@ -80,6 +80,8 @@
                         <div class="w-[42%] shrink-0 bg-zinc-100 relative overflow-hidden">
                             @if($book->cover_path)
                                 <img src="{{ Storage::url($book->cover_path) }}" alt="{{ $book->title }}" class="w-full h-full object-cover aspect-[3/4] transform transition-transform duration-300 ease-out group-hover:scale-105" loading="lazy" decoding="async">
+                            @elseif($book->isbn)
+                                <img src="https://covers.openlibrary.org/b/isbn/{{ $book->isbn }}-M.jpg?default=false" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'" alt="{{ $book->title }}" class="w-full h-full object-cover aspect-[3/4] transform transition-transform duration-300 ease-out group-hover:scale-105" loading="lazy" decoding="async"><div class="hidden w-full h-full aspect-[3/4] place-items-center bg-zinc-100 text-zinc-400 text-xs font-medium p-4 text-center leading-tight">{{ $book->title }}</div>
                             @else
                                 <div class="w-full h-full aspect-[3/4] grid place-items-center bg-zinc-100 text-zinc-400 text-xs font-medium p-4 text-center leading-tight">{{ $book->title }}</div>
                             @endif
@@ -120,6 +122,8 @@
                         <div class="aspect-[2/3] rounded-xl overflow-hidden bg-zinc-100 relative">
                             @if($book->cover_path)
                                 <img src="{{ Storage::url($book->cover_path) }}" alt="{{ $book->title }}" class="w-full h-full object-cover transform transition-transform duration-300 ease-out group-hover:scale-105" loading="lazy" decoding="async">
+                            @elseif($book->isbn)
+                                <img src="https://covers.openlibrary.org/b/isbn/{{ $book->isbn }}-M.jpg?default=false" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'" alt="{{ $book->title }}" class="w-full h-full object-cover transform transition-transform duration-300 ease-out group-hover:scale-105" loading="lazy" decoding="async"><div class="hidden w-full h-full place-items-center bg-zinc-100 text-zinc-400 text-[11px] font-medium p-3 text-center leading-tight" style="display:none">{{ $book->title }}</div>
                             @else
                                 <div class="w-full h-full grid place-items-center bg-zinc-100 text-zinc-400 text-[11px] font-medium p-3 text-center leading-tight">{{ $book->title }}</div>
                             @endif
@@ -158,6 +162,8 @@
                                 <div class="w-16 h-20 rounded-lg overflow-hidden bg-zinc-100 shrink-0 border border-zinc-100">
                                     @if($book->cover_path)
                                         <img src="{{ Storage::url($book->cover_path) }}" alt="{{ $book->title }}" class="w-full h-full object-cover transform transition-transform duration-300 ease-out group-hover:scale-105" loading="lazy" decoding="async">
+                                    @elseif($book->isbn)
+                                        <img src="https://covers.openlibrary.org/b/isbn/{{ $book->isbn }}-M.jpg?default=false" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'" alt="{{ $book->title }}" class="w-full h-full object-cover transform transition-transform duration-300 ease-out group-hover:scale-105" loading="lazy" decoding="async"><div class="hidden w-full h-full place-items-center bg-zinc-100 text-zinc-400 text-[10px] font-medium p-2 text-center leading-tight" style="display:none">{{ $book->title }}</div>
                                     @else
                                         <div class="w-full h-full grid place-items-center bg-zinc-100 text-zinc-400 text-[10px] font-medium p-2 text-center leading-tight">{{ $book->title }}</div>
                                     @endif
