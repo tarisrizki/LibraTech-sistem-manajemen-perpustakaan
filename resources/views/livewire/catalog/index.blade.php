@@ -27,8 +27,8 @@
                     <flux:button variant="ghost" href="#featured" class="!rounded-full">Pilihan editor</flux:button>
                 </div>
             </div>
-            <div class="hidden lg:block min-h-[260px] bg-[#f0ecf9] border-l border-[#e2e8f0] relative overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1519682337058-a94d519337bc?q=80&w=1200&auto=format&fit=crop" alt="" class="w-full h-full object-cover transform transition duration-300 hover:scale-105" loading="lazy" decoding="async" sizes="(max-width:1024px) 100vw, 40vw">
+            <div class="hidden lg:block min-h-[260px] bg-[#f0ecf9] border-l border-[#e2e8f0] relative overflow-hidden grid place-items-center">
+                <div class="text-center p-8"><p class="font-[Literata,ui-serif,Georgia,serif] text-4xl font-semibold text-[#3525cd]">42</p><p class="text-xs tracking-[0.12em] uppercase text-zinc-500 font-medium mt-1">koleksi terkurasi</p><p class="text-[11px] text-zinc-400 mt-3 max-w-[22ch] mx-auto leading-relaxed">Cover asli per ISBN, saringan cepat.</p></div>
             </div>
         </div>
 
@@ -146,7 +146,7 @@
                                 @endif
                             </div>
                             <div class="flex gap-3 flex-1">
-                                <div class="w-16 h-20 rounded-xl overflow-hidden bg-zinc-100 shrink-0 border border-zinc-100">
+                                <div class="w-[84px] h-[112px] rounded-xl overflow-hidden bg-zinc-100 shrink-0 border border-[#c7c4d8]">
                                     <x-cover-image :coverWebpUrl="$book->cover_webp_url" :coverPath="$book->cover_path" :isbn="$book->isbn" :alt="$book->title" class="w-full h-full object-cover transform transition duration-300 ease-out group-hover:scale-105" sizes="(max-width:768px) 100vw, 25vw" />
                                 </div>
                                 <div class="flex-1 min-w-0">
