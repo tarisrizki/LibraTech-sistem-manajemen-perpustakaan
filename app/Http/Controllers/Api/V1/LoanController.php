@@ -8,11 +8,13 @@ use App\Actions\Loans\RequestLoanAction;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\LoanResource;
 use App\Models\Loan;
+use Dedoc\Scramble\Attributes\Group;
 use DomainException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
+#[Group('Loans')]
 class LoanController extends Controller
 {
     public function index(Request $request): AnonymousResourceCollection

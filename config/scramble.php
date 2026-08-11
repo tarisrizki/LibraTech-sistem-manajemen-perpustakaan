@@ -1,6 +1,7 @@
 <?php
 
 use Dedoc\Scramble\Http\Middleware\RestrictedDocsAccess;
+use Dedoc\Scramble\SecurityDocumentation\MiddlewareAuthSecurityStrategy;
 
 return [
     /*
@@ -42,19 +43,13 @@ return [
     ],
 
     'info' => [
-        /*
-         * API version.
-         */
+        'title' => 'LibraTech API',
         'version' => env('API_VERSION', '1.0.0'),
-
-        /*
-         * Description rendered on the home page of the API documentation (`/docs/api`).
-         */
-        'description' => 'LibraTech API — katalog buku, kategori, dan peminjaman perpustakaan.',
+        'description' => 'LibraTech API — katalog buku, kategori, dan peminjaman perpustakaan. Base URL `/api/v1`, auth Bearer (Sanctum).',
     ],
 
     'ui' => [
-        'title' => 'LibraTech API Docs',
+        'title' => 'LibraTech API',
     ],
 
     'renderer' => 'elements',
@@ -170,5 +165,5 @@ return [
      * ],
      */
     // 'security_strategy' => \Dedoc\Scramble\SecurityDocumentation\MiddlewareAuthSecurityStrategy::class,
-    'security_strategy' => null,
+    'security_strategy' => MiddlewareAuthSecurityStrategy::class,
 ];

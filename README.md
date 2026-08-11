@@ -22,7 +22,7 @@ Dibangun sesuai paket dokumen `00-INDEX.md` s/d `06-ORCHESTRATOR-PROMPT.md` (PRD
 | Frontend | Blade + Tailwind CSS + Livewire 4 |
 | Database | SQLite (dev), PostgreSQL via Supabase (prod) |
 | API Auth | Laravel Sanctum — token Bearer |
-| Cache & Session | `database` (dev), `redis` (prod — Render/Upstash) — di-invalidate oleh Model Observer |
+| Cache & Session | `redis` via `predis` (`CACHE_STORE=redis`, `SESSION_DRIVER=redis`, `REDIS_CLIENT=predis`) — TTL 900s per query string di `GET /api/v1/books` & `/categories`, di-invalidate oleh `BookObserver`/`CategoryObserver` (`Cache::flush`); testing pakai `array` (`phpunit.xml`) |
 | API Docs | Scramble `dedoc/scramble` — OpenAPI 3.1 |
 | Quality | Laravel Pint + Larastan level 5 (target level 8) |
 | Testing | Pest 4 |

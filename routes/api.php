@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\Api\V1\Admin\AdminBookController;
 use App\Http\Controllers\Api\V1\Admin\LoanAdminController as AdminLoanController;
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\BookController;
@@ -24,6 +25,9 @@ Route::prefix('v1')->group(function (): void {
     });
 
     Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function (): void {
+        Route::post('/books', [AdminBookController::class, 'store']);
+        Route::put('/books/{book}', [AdminBookController::class, 'update']);
+        Route::delete('/books/{book}', [AdminBookController::class, 'destroy']);
         Route::get('/loans', [AdminLoanController::class, 'index']);
         Route::patch('/loans/{loan}/approve', [AdminLoanController::class, 'approve']);
         Route::patch('/loans/{loan}/reject', [AdminLoanController::class, 'reject']);

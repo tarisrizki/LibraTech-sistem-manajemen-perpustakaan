@@ -1,0 +1,1045 @@
+openapi: 3.1.0
+info:
+  title: LibraTech API
+  version: 1.0.0
+  description: LibraTech API — katalog buku, kategori, dan peminjaman perpustakaan. Base URL `/api/v1`, auth Bearer (Sanctum).
+servers:
+- url: https://libratech.lambada.my.id/api
+tags:
+- name: Auth
+- name: Categories
+- name: Books
+- name: Loans
+- name: Admin — Books
+- name: Admin — Loans
+security:
+- http: []
+paths:
+  /v1/admin/books:
+    post:
+      operationId: adminBook.store
+      tags:
+      - Admin — Books
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/StoreBookRequest'
+      responses:
+        '201':
+          description: '`BookResource`'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    allOf:
+                    - $ref: '#/components/schemas/BookResource'
+                    - type: object
+                      required:
+                      - category
+                required:
+                - data
+        '401':
+          $ref: '#/components/responses/AuthenticationException'
+        '422':
+          $ref: '#/components/responses/ValidationException'
+        '403':
+          $ref: '#/components/responses/AuthorizationException'
+  /v1/admin/books/{book}:
+    put:
+      operationId: adminBook.update
+      tags:
+      - Admin — Books
+      parameters:
+      - name: book
+        in: path
+        required: true
+        description: The book ID
+        schema:
+          type: integer
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UpdateBookRequest'
+      responses:
+        '200':
+          description: '`BookResource`'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    allOf:
+                    - $ref: '#/components/schemas/BookResource'
+                    - type: object
+                      required:
+                      - category
+                required:
+                - data
+        '404':
+          $ref: '#/components/responses/ModelNotFoundException'
+        '401':
+          $ref: '#/components/responses/AuthenticationException'
+        '422':
+          $ref: '#/components/responses/ValidationException'
+        '403':
+          $ref: '#/components/responses/AuthorizationException'
+    delete:
+      operationId: adminBook.destroy
+      tags:
+      - Admin — Books
+      parameters:
+      - name: book
+        in: path
+        required: true
+        description: The book ID
+        schema:
+          type: integer
+      responses:
+        '204':
+          description: No content
+        '403':
+          $ref: '#/components/responses/AuthorizationException'
+        '404':
+          $ref: '#/components/responses/ModelNotFoundException'
+        '401':
+          $ref: '#/components/responses/AuthenticationException'
+  /v1/admin/loans:
+    get:
+      operationId: loanAdmin.index
+      tags:
+      - Admin — Loans
+      responses:
+        '200':
+          description: Paginated set of `LoanResource`
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/LoanResource'
+                  links:
+                    type: object
+                    properties:
+                      first:
+                        type:
+                        - string
+                        - 'null'
+                      last:
+                        type:
+                        - string
+                        - 'null'
+                      prev:
+                        type:
+                        - string
+                        - 'null'
+                      next:
+                        type:
+                        - string
+                        - 'null'
+                    required:
+                    - first
+                    - last
+                    - prev
+                    - next
+                  meta:
+                    type: object
+                    properties:
+                      current_page:
+                        type: integer
+                        minimum: 1
+                      from:
+                        type:
+                        - integer
+                        - 'null'
+                        minimum: 1
+                      last_page:
+                        type: integer
+                        minimum: 1
+                      links:
+                        type: array
+                        description: Generated paginator links.
+                        items:
+                          type: object
+                          properties:
+                            url:
+                              type:
+                              - string
+                              - 'null'
+                            label:
+                              type: string
+                            active:
+                              type: boolean
+                          required:
+                          - url
+                          - label
+                          - active
+                      path:
+                        type:
+                        - string
+                        - 'null'
+                        description: Base path for paginator generated URLs.
+                      per_page:
+                        type: integer
+                        description: Number of items shown per page.
+                        minimum: 0
+                      to:
+                        type:
+                        - integer
+                        - 'null'
+                        description: Number of the last item in the slice.
+                        minimum: 1
+                      total:
+                        type: integer
+                        description: Total number of items being paginated.
+                        minimum: 0
+                    required:
+                    - current_page
+                    - from
+                    - last_page
+                    - links
+                    - path
+                    - per_page
+                    - to
+                    - total
+                required:
+                - data
+                - links
+                - meta
+        '403':
+          $ref: '#/components/responses/AuthorizationException'
+        '401':
+          $ref: '#/components/responses/AuthenticationException'
+  /v1/admin/loans/{loan}/approve:
+    patch:
+      operationId: loanAdmin.approve
+      tags:
+      - Admin — Loans
+      parameters:
+      - name: loan
+        in: path
+        required: true
+        description: The loan ID
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: '`LoanResource`'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    allOf:
+                    - $ref: '#/components/schemas/LoanResource'
+                    - type: object
+                      required:
+                      - book
+                      - user
+                required:
+                - data
+        '422':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                required:
+                - message
+        '403':
+          $ref: '#/components/responses/AuthorizationException'
+        '404':
+          $ref: '#/components/responses/ModelNotFoundException'
+        '401':
+          $ref: '#/components/responses/AuthenticationException'
+  /v1/admin/loans/{loan}/reject:
+    patch:
+      operationId: loanAdmin.reject
+      tags:
+      - Admin — Loans
+      parameters:
+      - name: loan
+        in: path
+        required: true
+        description: The loan ID
+        schema:
+          type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                rejection_reason:
+                  type: string
+                  maxLength: 255
+              required:
+              - rejection_reason
+      responses:
+        '200':
+          description: '`LoanResource`'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    allOf:
+                    - $ref: '#/components/schemas/LoanResource'
+                    - type: object
+                      required:
+                      - book
+                      - user
+                required:
+                - data
+        '422':
+          $ref: '#/components/responses/ValidationException'
+        '403':
+          $ref: '#/components/responses/AuthorizationException'
+        '404':
+          $ref: '#/components/responses/ModelNotFoundException'
+        '401':
+          $ref: '#/components/responses/AuthenticationException'
+  /v1/admin/loans/{loan}/return:
+    patch:
+      operationId: loanAdmin.return
+      tags:
+      - Admin — Loans
+      parameters:
+      - name: loan
+        in: path
+        required: true
+        description: The loan ID
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: '`LoanResource`'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    allOf:
+                    - $ref: '#/components/schemas/LoanResource'
+                    - type: object
+                      required:
+                      - book
+                      - user
+                required:
+                - data
+        '422':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                required:
+                - message
+        '403':
+          $ref: '#/components/responses/AuthorizationException'
+        '404':
+          $ref: '#/components/responses/ModelNotFoundException'
+        '401':
+          $ref: '#/components/responses/AuthenticationException'
+  /v1/auth/login:
+    post:
+      operationId: auth.login
+      tags:
+      - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+              required:
+              - email
+              - password
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      token:
+                        type: string
+                      user:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                          name:
+                            type: string
+                          email:
+                            type: string
+                          role:
+                            type: string
+                        required:
+                        - id
+                        - name
+                        - email
+                        - role
+                    required:
+                    - token
+                    - user
+                required:
+                - data
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    const: Kredensial tidak valid.
+                required:
+                - message
+        '422':
+          $ref: '#/components/responses/ValidationException'
+      security: []
+  /v1/auth/logout:
+    post:
+      operationId: auth.logout
+      tags:
+      - Auth
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    const: Logged out.
+                required:
+                - message
+        '401':
+          $ref: '#/components/responses/AuthenticationException'
+  /v1/auth/me:
+    get:
+      operationId: auth.me
+      tags:
+      - Auth
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      email:
+                        type: string
+                      role:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - email
+                    - role
+                required:
+                - data
+        '401':
+          $ref: '#/components/responses/AuthenticationException'
+  /v1/books:
+    get:
+      operationId: book.index
+      tags:
+      - Books
+      responses:
+        '200':
+          description: Paginated set of `BookResource`
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      allOf:
+                      - $ref: '#/components/schemas/BookResource'
+                      - type: object
+                        required:
+                        - category
+                  links:
+                    type: object
+                    properties:
+                      first:
+                        type:
+                        - string
+                        - 'null'
+                      last:
+                        type:
+                        - string
+                        - 'null'
+                      prev:
+                        type:
+                        - string
+                        - 'null'
+                      next:
+                        type:
+                        - string
+                        - 'null'
+                    required:
+                    - first
+                    - last
+                    - prev
+                    - next
+                  meta:
+                    type: object
+                    properties:
+                      current_page:
+                        type: integer
+                        minimum: 1
+                      from:
+                        type:
+                        - integer
+                        - 'null'
+                        minimum: 1
+                      last_page:
+                        type: integer
+                        minimum: 1
+                      links:
+                        type: array
+                        description: Generated paginator links.
+                        items:
+                          type: object
+                          properties:
+                            url:
+                              type:
+                              - string
+                              - 'null'
+                            label:
+                              type: string
+                            active:
+                              type: boolean
+                          required:
+                          - url
+                          - label
+                          - active
+                      path:
+                        type:
+                        - string
+                        - 'null'
+                        description: Base path for paginator generated URLs.
+                      per_page:
+                        type: integer
+                        description: Number of items shown per page.
+                        minimum: 0
+                      to:
+                        type:
+                        - integer
+                        - 'null'
+                        description: Number of the last item in the slice.
+                        minimum: 1
+                      total:
+                        type: integer
+                        description: Total number of items being paginated.
+                        minimum: 0
+                    required:
+                    - current_page
+                    - from
+                    - last_page
+                    - links
+                    - path
+                    - per_page
+                    - to
+                    - total
+                required:
+                - data
+                - links
+                - meta
+      security: []
+  /v1/books/{book}:
+    get:
+      operationId: book.show
+      tags:
+      - Books
+      parameters:
+      - name: book
+        in: path
+        required: true
+        description: The book ID
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: '`BookResource`'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    allOf:
+                    - $ref: '#/components/schemas/BookResource'
+                    - type: object
+                      required:
+                      - category
+                required:
+                - data
+        '404':
+          $ref: '#/components/responses/ModelNotFoundException'
+      security: []
+  /v1/categories:
+    get:
+      operationId: category.index
+      tags:
+      - Categories
+      responses:
+        '200':
+          description: Array of `CategoryResource`
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/CategoryResource'
+                required:
+                - data
+      security: []
+  /v1/loans:
+    get:
+      operationId: loan.index
+      tags:
+      - Loans
+      responses:
+        '200':
+          description: Paginated set of `LoanResource`
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      allOf:
+                      - $ref: '#/components/schemas/LoanResource'
+                      - type: object
+                        required:
+                        - book
+                  links:
+                    type: object
+                    properties:
+                      first:
+                        type:
+                        - string
+                        - 'null'
+                      last:
+                        type:
+                        - string
+                        - 'null'
+                      prev:
+                        type:
+                        - string
+                        - 'null'
+                      next:
+                        type:
+                        - string
+                        - 'null'
+                    required:
+                    - first
+                    - last
+                    - prev
+                    - next
+                  meta:
+                    type: object
+                    properties:
+                      current_page:
+                        type: integer
+                        minimum: 1
+                      from:
+                        type:
+                        - integer
+                        - 'null'
+                        minimum: 1
+                      last_page:
+                        type: integer
+                        minimum: 1
+                      links:
+                        type: array
+                        description: Generated paginator links.
+                        items:
+                          type: object
+                          properties:
+                            url:
+                              type:
+                              - string
+                              - 'null'
+                            label:
+                              type: string
+                            active:
+                              type: boolean
+                          required:
+                          - url
+                          - label
+                          - active
+                      path:
+                        type:
+                        - string
+                        - 'null'
+                        description: Base path for paginator generated URLs.
+                      per_page:
+                        type: integer
+                        description: Number of items shown per page.
+                        minimum: 0
+                      to:
+                        type:
+                        - integer
+                        - 'null'
+                        description: Number of the last item in the slice.
+                        minimum: 1
+                      total:
+                        type: integer
+                        description: Total number of items being paginated.
+                        minimum: 0
+                    required:
+                    - current_page
+                    - from
+                    - last_page
+                    - links
+                    - path
+                    - per_page
+                    - to
+                    - total
+                required:
+                - data
+                - links
+                - meta
+        '401':
+          $ref: '#/components/responses/AuthenticationException'
+    post:
+      operationId: loan.store
+      tags:
+      - Loans
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                book_id:
+                  type: integer
+              required:
+              - book_id
+      responses:
+        '201':
+          description: '`LoanResource`'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    allOf:
+                    - $ref: '#/components/schemas/LoanResource'
+                    - type: object
+                      required:
+                      - book
+                required:
+                - data
+        '422':
+          $ref: '#/components/responses/ValidationException'
+        '401':
+          $ref: '#/components/responses/AuthenticationException'
+components:
+  securitySchemes:
+    http:
+      type: http
+      scheme: bearer
+  schemas:
+    BookResource:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        author:
+          type: string
+        isbn:
+          type: string
+        category:
+          $ref: '#/components/schemas/CategoryResource'
+        stock:
+          type: integer
+        is_available:
+          type: boolean
+        description:
+          type:
+          - string
+          - 'null'
+        cover_url:
+          type:
+          - string
+          - 'null'
+        published_year:
+          type:
+          - integer
+          - 'null'
+      required:
+      - id
+      - title
+      - author
+      - isbn
+      - stock
+      - is_available
+      - description
+      - cover_url
+      - published_year
+      title: BookResource
+    CategoryResource:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        slug:
+          type: string
+      required:
+      - id
+      - name
+      - slug
+      title: CategoryResource
+    LoanResource:
+      type: object
+      properties:
+        id:
+          type: integer
+        status:
+          type: string
+        book:
+          allOf:
+          - $ref: '#/components/schemas/BookResource'
+          - type: object
+            required:
+            - category
+        user:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+            email:
+              type: string
+          required:
+          - id
+          - name
+          - email
+        requested_at:
+          type:
+          - string
+          - 'null'
+        approved_at:
+          type:
+          - string
+          - 'null'
+        due_at:
+          type:
+          - string
+          - 'null'
+        returned_at:
+          type:
+          - string
+          - 'null'
+        rejection_reason:
+          type:
+          - string
+          - 'null'
+      required:
+      - id
+      - status
+      - requested_at
+      - approved_at
+      - due_at
+      - returned_at
+      - rejection_reason
+      title: LoanResource
+    StoreBookRequest:
+      type: object
+      properties:
+        category_id:
+          type: integer
+        title:
+          type: string
+          maxLength: 255
+        author:
+          type: string
+          maxLength: 255
+        isbn:
+          type: string
+          maxLength: 20
+        stock:
+          type: integer
+          minimum: 0
+        description:
+          type:
+          - string
+          - 'null'
+        cover:
+          type:
+          - string
+          - 'null'
+          format: binary
+          contentMediaType: application/octet-stream
+          description: 'Maximum file size: 2048 kilobytes.'
+        published_year:
+          type:
+          - integer
+          - 'null'
+          minimum: 1000
+          maximum: 2027
+      required:
+      - category_id
+      - title
+      - author
+      - isbn
+      - stock
+      title: StoreBookRequest
+    UpdateBookRequest:
+      type: object
+      properties:
+        category_id:
+          type: integer
+        title:
+          type: string
+          maxLength: 255
+        author:
+          type: string
+          maxLength: 255
+        isbn:
+          type: string
+          maxLength: 20
+        stock:
+          type: integer
+          minimum: 0
+        description:
+          type:
+          - string
+          - 'null'
+        cover:
+          type:
+          - string
+          - 'null'
+          format: binary
+          contentMediaType: application/octet-stream
+          description: 'Maximum file size: 2048 kilobytes.'
+        published_year:
+          type:
+          - integer
+          - 'null'
+          minimum: 1000
+          maximum: 2027
+      required:
+      - category_id
+      - title
+      - author
+      - isbn
+      - stock
+      title: UpdateBookRequest
+  responses:
+    ValidationException:
+      description: Validation error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Errors overview.
+              errors:
+                type: object
+                description: A detailed description of each field that failed validation.
+                additionalProperties:
+                  type: array
+                  items:
+                    type: string
+            required:
+            - message
+            - errors
+    AuthenticationException:
+      description: Unauthenticated
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Error overview.
+            required:
+            - message
+    ModelNotFoundException:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Error overview.
+            required:
+            - message
+    AuthorizationException:
+      description: Authorization error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Error overview.
+            required:
+            - message

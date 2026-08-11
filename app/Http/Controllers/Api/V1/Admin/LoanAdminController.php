@@ -10,12 +10,14 @@ use App\Actions\Loans\ReturnLoanAction;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\LoanResource;
 use App\Models\Loan;
+use Dedoc\Scramble\Attributes\Group;
 use DomainException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Gate;
 
+#[Group('Admin — Loans')]
 class LoanAdminController extends Controller
 {
     public function index(Request $request): AnonymousResourceCollection

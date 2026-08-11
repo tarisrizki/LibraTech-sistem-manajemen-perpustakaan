@@ -28,7 +28,7 @@
                 </div>
             </div>
             <div class="hidden lg:block min-h-[260px] bg-[#f0ecf9] border-l border-[#e2e8f0] relative overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1519682337058-a94d519337bc?q=80&w=1200&auto=format&fit=crop" alt="" class="w-full h-full object-cover" loading="lazy">
+                <img src="https://images.unsplash.com/photo-1519682337058-a94d519337bc?q=80&w=1200&auto=format&fit=crop" alt="" class="w-full h-full object-cover transform transition duration-300 hover:scale-105" loading="lazy" decoding="async" sizes="(max-width:1024px) 100vw, 40vw">
             </div>
         </div>
 
@@ -158,11 +158,11 @@
                                 @endif
                             </div>
                             <div class="flex gap-3 flex-1">
-                                <div class="w-16 h-20 rounded-lg overflow-hidden bg-zinc-100 shrink-0 border border-zinc-100">
+                                <div class="w-16 h-20 rounded-xl overflow-hidden bg-zinc-100 shrink-0 border border-zinc-100">
                                     @if($book->cover_path)
-                                        <img src="{{ Storage::url($book->cover_path) }}" alt="{{ $book->title }}" class="w-full h-full object-cover transform transition-transform duration-300 ease-out group-hover:scale-105" loading="lazy" decoding="async">
+                                        <img src="{{ Storage::url($book->cover_path) }}" alt="{{ $book->title }}" class="w-full h-full object-cover transform transition duration-300 ease-out group-hover:scale-105" loading="lazy" decoding="async">
                                     @elseif($book->isbn)
-                                        <img src="https://covers.openlibrary.org/b/isbn/{{ $book->isbn }}-M.jpg?default=false" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'" alt="{{ $book->title }}" class="w-full h-full object-cover transform transition-transform duration-300 ease-out group-hover:scale-105" loading="lazy" decoding="async"><div class="hidden w-full h-full place-items-center bg-zinc-100 text-zinc-400 text-[10px] font-medium p-2 text-center leading-tight" style="display:none">{{ $book->title }}</div>
+                                        <img src="https://covers.openlibrary.org/b/isbn/{{ $book->isbn }}-M.jpg?default=false" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'" alt="{{ $book->title }}" class="w-full h-full object-cover transform transition duration-300 ease-out group-hover:scale-105" loading="lazy" decoding="async" sizes="(max-width:768) 100vw, 25vw"><div class="hidden w-full h-full place-items-center bg-zinc-100 text-zinc-400 text-[10px] font-medium p-2 text-center leading-tight" style="display:none">{{ $book->title }}</div>
                                     @else
                                         <div class="w-full h-full grid place-items-center bg-zinc-100 text-zinc-400 text-[10px] font-medium p-2 text-center leading-tight">{{ $book->title }}</div>
                                     @endif

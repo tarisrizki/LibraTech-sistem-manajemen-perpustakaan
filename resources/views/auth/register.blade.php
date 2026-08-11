@@ -85,7 +85,7 @@
 
                 <flux:button variant="primary" type="submit" class="w-full mt-2 justify-center gap-2 !rounded-[10px] !bg-primary hover:!bg-primary/90">
                     Daftar
-                    <flux:icon.arrow-right class="w-4 h-4" />
+                    <flux:icon.arrow-right class="w-5 h-5" />
                 </flux:button>
             </form>
 
