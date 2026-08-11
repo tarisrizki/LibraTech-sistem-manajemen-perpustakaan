@@ -4,14 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>LibraTech - Manajemen Perpustakaan</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700&family=jetbrains-mono:400,500" rel="stylesheet">
-    <style>
-        :root{--ink:#0f172a;--paper:#fdfcf8;--muted:#64748b;--line:#e2e8f0;--accent:#4f46e5}
-        *{font-family:'Instrument Sans',ui-sans-serif,system-ui,sans-serif}
-        .mono{font-family:'JetBrains Mono',ui-monospace,monospace}
-    </style>
+    @vite(['resources/css/app.css','resources/js/app.js'])
+    @livewireStyles
 </head>
 <body class="bg-[#fdfcf8] text-[#0f172a] min-h-[100dvh] antialiased">
     <header class="sticky top-0 z-40 bg-white/80 backdrop-blur border-b border-zinc-200">
@@ -52,8 +46,8 @@
         <div class="max-w-[1280px] mx-auto px-4 lg:px-6 mt-4"><div class="bg-amber-50 border border-amber-200 text-amber-900 px-4 py-3 rounded-xl text-sm"><ul class="list-disc pl-4">@foreach($errors->all() as $e)<li>{{ $e }}</li>@endforeach</ul></div></div>
     @endif
 
-    <main class="max-w-[1280px] mx-auto px-4 lg:px-6 py-6 lg:py-8">@yield('content')</main>
-
-    <footer class="border-t border-zinc-200 mt-12 py-6 text-center text-xs text-zinc-500 mono">LibraTech &middot; Sistem Manajemen Perpustakaan &middot; {{ date('Y') }}</footer>
+    <main class="max-w-[1280px] mx-auto px-4 lg:px-6 py-6 lg:py-8">{{ $slot ?? '' }}@yield('content')</main>
+    <footer class="border-t border-zinc-200 mt-12 py-6 text-center text-xs text-zinc-500">LibraTech · Sistem Manajemen Perpustakaan · {{ date('Y') }}</footer>
+    @livewireScripts
 </body>
 </html>
