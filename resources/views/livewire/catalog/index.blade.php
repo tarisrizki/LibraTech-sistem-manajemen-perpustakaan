@@ -75,13 +75,13 @@
         </div>
         <div x-ref="featured" class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
             @foreach($featured as $book)
-                <flux:card data-stagger class="!p-0 !rounded-[16px] overflow-hidden hover:shadow-[0_8px_20px_rgba(0,0,0,0.06)] hover:-translate-y-0.5 transition duration-180 flex flex-col">
+                <flux:card data-stagger class="group !p-0 !rounded-[16px] overflow-hidden hover:shadow-[0_8px_20px_rgba(0,0,0,0.06)] hover:-translate-y-0.5 transition duration-180 flex flex-col">
                     <div class="flex gap-0 flex-1">
                         <div class="w-[42%] shrink-0 bg-zinc-100 relative overflow-hidden">
                             @if($book->cover_path)
-                                <img src="{{ Storage::url($book->cover_path) }}" alt="{{ $book->title }}" class="w-full h-full object-cover aspect-[3/4]" loading="lazy">
+                                <img src="{{ Storage::url($book->cover_path) }}" alt="{{ $book->title }}" class="w-full h-full object-cover aspect-[3/4] transform transition-transform duration-300 ease-out group-hover:scale-105" loading="lazy" decoding="async">
                             @else
-                                <img src="https://picsum.photos/seed/book-{{ $book->id }}-feat/400/600" alt="{{ $book->title }}" class="w-full h-full object-cover aspect-[3/4]" loading="lazy">
+                                <div class="w-full h-full aspect-[3/4] grid place-items-center bg-zinc-100 text-zinc-400 text-xs font-medium p-4 text-center leading-tight">{{ $book->title }}</div>
                             @endif
                         </div>
                         <div class="flex-1 min-w-0 p-4 lg:p-5 flex flex-col">
@@ -119,9 +119,9 @@
                     <flux:card class="!p-3 !rounded-[16px] h-full hover:border-zinc-300 hover:shadow-sm transition duration-180 flex flex-col">
                         <div class="aspect-[2/3] rounded-xl overflow-hidden bg-zinc-100 relative">
                             @if($book->cover_path)
-                                <img src="{{ Storage::url($book->cover_path) }}" alt="{{ $book->title }}" class="w-full h-full object-cover group-hover:scale-[1.02] transition duration-180" loading="lazy">
+                                <img src="{{ Storage::url($book->cover_path) }}" alt="{{ $book->title }}" class="w-full h-full object-cover transform transition-transform duration-300 ease-out group-hover:scale-105" loading="lazy" decoding="async">
                             @else
-                                <img src="https://picsum.photos/seed/book-{{ $book->id }}-new/400/600" alt="{{ $book->title }}" class="w-full h-full object-cover group-hover:scale-[1.02] transition duration-180" loading="lazy">
+                                <div class="w-full h-full grid place-items-center bg-zinc-100 text-zinc-400 text-[11px] font-medium p-3 text-center leading-tight">{{ $book->title }}</div>
                             @endif
                             <span class="absolute top-2 right-2 w-6 h-6 grid place-items-center rounded-full text-[11px] border shadow-sm {{ $book->stock > 0 ? 'bg-emerald-600 text-white border-emerald-600' : 'bg-white text-zinc-500 border-zinc-200' }}">{{ $book->stock > 0 ? '✓' : '·' }}</span>
                         </div>
@@ -157,9 +157,9 @@
                             <div class="flex gap-3 flex-1">
                                 <div class="w-16 h-20 rounded-lg overflow-hidden bg-zinc-100 shrink-0 border border-zinc-100">
                                     @if($book->cover_path)
-                                        <img src="{{ Storage::url($book->cover_path) }}" alt="{{ $book->title }}" class="w-full h-full object-cover" loading="lazy">
+                                        <img src="{{ Storage::url($book->cover_path) }}" alt="{{ $book->title }}" class="w-full h-full object-cover transform transition-transform duration-300 ease-out group-hover:scale-105" loading="lazy" decoding="async">
                                     @else
-                                        <img src="https://picsum.photos/seed/book-{{ $book->id }}/200/280" alt="{{ $book->title }}" class="w-full h-full object-cover" loading="lazy">
+                                        <div class="w-full h-full grid place-items-center bg-zinc-100 text-zinc-400 text-[10px] font-medium p-2 text-center leading-tight">{{ $book->title }}</div>
                                     @endif
                                 </div>
                                 <div class="flex-1 min-w-0">

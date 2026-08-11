@@ -24,9 +24,9 @@
 
             <div class="mt-6 max-w-[360px] rounded-[16px] overflow-hidden border border-[#e2e8f0] bg-zinc-50 aspect-[2/3]">
                 @if($book->cover_path)
-                    <img src="{{ Storage::url($book->cover_path) }}" alt="Cover {{ $book->title }}" class="w-full h-full object-cover">
+                    <img src="{{ Storage::url($book->cover_path) }}" alt="Cover {{ $book->title }}" class="w-full h-full object-cover transform transition-transform duration-300 ease-out hover:scale-[1.02]">
                 @else
-                    <img src="https://picsum.photos/seed/book-{{ $book->id }}-detail/600/900" alt="Cover {{ $book->title }}" class="w-full h-full object-cover">
+                    <div class="w-full h-full grid place-items-center text-zinc-400 text-sm font-medium p-6 text-center leading-tight bg-zinc-100">{{ $book->title }}</div>
                 @endif
             </div>
 
@@ -86,9 +86,9 @@
                     <flux:card class="!p-3 !rounded-[16px] h-full hover:border-zinc-300 hover:shadow-sm transition duration-180">
                         <div class="aspect-[2/3] rounded-xl overflow-hidden bg-zinc-100">
                             @if($rb->cover_path)
-                                <img src="{{ Storage::url($rb->cover_path) }}" alt="{{ $rb->title }}" class="w-full h-full object-cover group-hover:scale-[1.02] transition duration-180" loading="lazy">
+                                <img src="{{ Storage::url($rb->cover_path) }}" alt="{{ $rb->title }}" class="w-full h-full object-cover transform transition-transform duration-300 ease-out group-hover:scale-105" loading="lazy" decoding="async">
                             @else
-                                <img src="https://picsum.photos/seed/book-{{ $rb->id }}-rel/400/600" alt="{{ $rb->title }}" class="w-full h-full object-cover group-hover:scale-[1.02] transition duration-180" loading="lazy">
+                                <div class="w-full h-full grid place-items-center bg-zinc-100 text-zinc-400 text-[11px] font-medium p-3 text-center leading-tight">{{ $rb->title }}</div>
                             @endif
                         </div>
                         <p class="mt-2.5 font-semibold text-[13px] leading-tight line-clamp-1 group-hover:text-[#4f46e5] transition">{{ $rb->title }}</p>
