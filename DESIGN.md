@@ -5,8 +5,8 @@
 - Stack: Laravel + Livewire v4 + Flux UI v2 + Tailwind v4 + Alpine.js + Motion
 - Sun wukong: basis 4fa; disiplin lengkap di stitch `DESIGN.md` Stitch
 
-## Token (satu tempat — `resources/css/app.css`)
-- primary #4f46e5, surface #fcf8ff, ink #1b1b24, muted #464555, line #c7c4d8, accent 2 #82f5c1 (secondary), error #93000a
+## Token (satu tempat — `resources/css/app.css` — mirror Stitch `7503948753495764153` `namedColors`)
+- primary #3525cd (Stitch `primary`; `#4f46e5` adalah `primary_container` — jangan pakai `#4f46e5` sebagai primary), surface #fcf8ff, ink #1b1b24 (`on_background`/`on_surface`), muted #464555 (`on_surface_variant`), line #c7c4d8 (`outline_variant`), accent2 #82f5c1 (`secondary_container`), error #ba1a1a (`error`; `#93000a` = `on_error_container`), outline #777587, surface_container #f0ecf9
 - font headline Literata (400/600/700), body/label Hanken Grotesk (400/500/600) — import via bunny.net
 - roundness 8px (card 16, input 10, pill 999), shadow 0 1px 24px rgba(27 27 36 / .07), border 1px #e2e8f0 variant
 - space 4/8/12/16/24, max-w 1280, header 64px sticky blurred
