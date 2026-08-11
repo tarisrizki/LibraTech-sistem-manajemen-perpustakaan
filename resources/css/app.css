@@ -8,7 +8,7 @@
 @theme {
   --font-sans: 'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif;
   --font-display: 'Literata', ui-serif, Georgia, serif;
-  /* Stitch 7503948753495764153 namedColors */
+  /* Stitch 7503948753495764153 namedColors — DESIGN.md single source */
   --color-primary: #3525cd;
   --color-primary-container: #4f46e5;
   --color-surface: #fcf8ff;
@@ -21,7 +21,35 @@
   --color-accent2: #82f5c1;
   --color-error: #ba1a1a;
   --color-on-error-container: #93000a;
+  /* Flux accent → Stitch primary (Flux uses --color-accent for primary variant) */
+  --color-accent: #3525cd;
+  --color-accent-content: #3525cd;
+  --color-accent-foreground: #ffffff;
 }
-@custom-variant dark (&:where(.dark, .dark *));
-:root { --radius-card: 16px; --radius-input: 10px; }
+
+/* Roundness — 8px base, card 16, input 10, pill 999 */
+:root {
+  --radius-card: 16px;
+  --radius-input: 10px;
+  --radius-pill: 999px;
+  color-scheme: light;
+}
+
 * { scrollbar-color: #c7c4d8 transparent; }
+
+/* Light-only: Flux defaults to light; prevent OS dark. */
+html { color-scheme: light; }
+
+/* Flux appearance: force light, no dark variant */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Flux light theme overrides — ensure primary maps to Stitch #3525cd */
+@layer theme {
+  :root,
+  :root[data-flux-theme='light'],
+  html:not(.dark) {
+    --color-accent: #3525cd;
+    --color-accent-content: #3525cd;
+    --color-accent-foreground: #ffffff;
+  }
+}

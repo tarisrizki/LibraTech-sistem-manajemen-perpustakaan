@@ -72,9 +72,9 @@
                             <td class="px-6 py-4">
                                 <div class="flex items-center gap-4">
                                     @if($book->cover_path)
-                                        <img src="{{ Storage::url($book->cover_path) }}" alt="cover {{ $book->title }}" class="w-12 h-16 object-cover rounded-[8px] border border-line-soft shadow-sm shrink-0" loading="lazy" />
+                                        <img src="{{ Storage::url($book->cover_path) }}" alt="cover {{ $book->title }}" class="w-12 h-16 object-cover rounded-xl border border-line shadow-sm shrink-0" loading="lazy" decoding="async" />
                                     @else
-                                        <div class="w-12 h-16 rounded-[8px] border border-line-soft bg-zinc-50 grid place-items-center shrink-0 text-zinc-400">
+                                        <div class="w-12 h-16 rounded-xl border border-line bg-zinc-50 grid place-items-center shrink-0 text-zinc-400">
                                             <flux:icon.photo class="w-5 h-5" />
                                         </div>
                                     @endif
@@ -186,7 +186,7 @@
                     <flux:label>Gambar Sampul</flux:label>
                     @if($existingCover && !$cover)
                         <div class="mb-2">
-                            <img src="{{ Storage::url($existingCover) }}" alt="cover preview" class="w-20 h-28 object-cover rounded-[10px] border border-line-soft" loading="lazy" />
+                            <img src="{{ Storage::url($existingCover) }}" alt="cover preview" class="w-20 h-28 object-cover rounded-xl border border-line" loading="lazy" decoding="async" />
                             <p class="text-xs text-muted mt-1">Sampul saat ini</p>
                         </div>
                     @endif
