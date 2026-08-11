@@ -5,11 +5,11 @@
             <p class="text-sm text-muted mt-1">Setujui, tolak, atau tandai pengembalian.</p>
         </div>
         <div class="flex items-center gap-2">
-            <flux:input wire:model.live.debounce.300ms="search" placeholder="Cari buku / anggota..." icon="magnifying-glass" class="!rounded-[10px] min-w-[220px]" />
+            <flux:input wire:model.live.debounce.300ms="search" placeholder="Cari buku atau anggota..." icon="magnifying-glass" class="!rounded-[10px] min-w-[220px]" />
         </div>
     </div>
 
-    {{-- Filter pills status (Flux-consistent) --}}
+    {{-- Filter pills status --}}
     <div class="mt-4 flex flex-wrap gap-2">
         @foreach($statuses as $val => $label)
             <button
@@ -33,7 +33,7 @@
                 </thead>
                 <tbody class="divide-y divide-zinc-100">
                     @forelse($loans as $loan)
-                        <tr class="hover:bg-[#f5f2ff]/50">
+                        <tr class="hover:bg-surface/60 transition-colors">
                             <td class="px-4 py-3">
                                 <span class="font-medium text-ink">{{ $loan->book->title ?? '-' }}</span><br>
                                 <span class="text-xs text-muted">{{ $loan->book->author ?? '-' }}</span>
@@ -65,12 +65,12 @@
                             <td class="px-4 py-3 text-right">
                                 <div class="inline-flex gap-1.5 flex-wrap justify-end">
                                     @if($statusVal === 'pending')
-                                        <flux:button size="xs" variant="primary" wire:click="approve({{ $loan->id }})" class="!rounded-full !bg-emerald-600">Setujui</flux:button>
+                                        <flux:button size="xs" variant="primary" wire:click="approve({{ $loan->id }})" class="!rounded-full !bg-emerald-600 hover:!bg-emerald-700">Setujui</flux:button>
                                         <flux:button size="xs" variant="ghost" wire:click="openReject({{ $loan->id }})" class="!rounded-full">Tolak</flux:button>
                                     @elseif(in_array($statusVal, ['approved','overdue'], true))
-                                        <flux:button size="xs" variant="primary" wire:click="markReturned({{ $loan->id }})" class="!rounded-full !bg-[#4f46e5]">Tandai kembali</flux:button>
+                                        <flux:button size="xs" variant="primary" wire:click="markReturned({{ $loan->id }})" class="!rounded-full">Tandai kembali</flux:button>
                                     @else
-                                        <span class="text-xs text-zinc-400">—</span>
+                                        <span class="text-xs text-zinc-400">-</span>
                                     @endif
                                 </div>
                             </td>
@@ -86,8 +86,9 @@
         @endif
     </div>
 
-    {{-- Reject modal — Flux --}}
-    <flux:modal wire:model.self="rejectId" class="md:!w-[420px]" :dismissible="false">
+    {{-- Reject modal - Flux with spring --}}
+    <flux:modal wire:model.self="rejectId" class="md:!w-[420px] data-[open]:animate-[modalSpring_220ms_cubic-bezier(0.34,1.56,0.64,1)]" :dismissible="false">
+        <style>@keyframes modalSpring{ from{opacity:0;transform:scale(0.98)} to{opacity:1;transform:scale(1)} } @media(prefers-reduced-motion:reduce){ [data-open]{animation:none !important} }</style>
         @if($rejectId)
             <div class="space-y-5">
                 <div>
@@ -95,13 +96,13 @@
                     <flux:subheading>Tuliskan alasan penolakan untuk anggota.</flux:subheading>
                 </div>
                 <flux:field>
-                    <flux:label>Alasan <span class="text-[#93000a]">*</span></flux:label>
-                    <flux:textarea wire:model="rejectionReason" rows="3" placeholder="Contoh: Stok tidak tersedia / data tidak valid" />
+                    <flux:label>Alasan <span class="text-error">*</span></flux:label>
+                    <flux:textarea wire:model="rejectionReason" rows="3" placeholder="Contoh: Stok tidak tersedia atau data tidak valid" class="!rounded-[10px]" />
                     <flux:error name="rejectionReason" />
                 </flux:field>
                 <div class="flex justify-end gap-2">
                     <flux:button variant="ghost" wire:click="cancelReject" class="!rounded-[8px]">Batal</flux:button>
-                    <flux:button variant="primary" wire:click="confirmReject" class="!rounded-[8px] !bg-zinc-900">Tolak peminjaman</flux:button>
+                    <flux:button variant="primary" wire:click="confirmReject" class="!rounded-[8px] !bg-zinc-900 hover:!bg-zinc-800">Tolak peminjaman</flux:button>
                 </div>
             </div>
         @endif

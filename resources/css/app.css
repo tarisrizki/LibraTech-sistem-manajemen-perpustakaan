@@ -15,6 +15,7 @@
   --color-line: #c7c4d8;
   --color-line-soft: #e2e8f0;
   --color-accent2: #82f5c1;
+  --color-error: #93000a;
 }
 @custom-variant dark (&:where(.dark, .dark *));
 :root { --radius-card: 16px; --radius-input: 10px; }

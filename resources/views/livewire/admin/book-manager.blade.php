@@ -1,20 +1,19 @@
 <div
     x-data="{}"
     class="max-w-[1280px] mx-auto"
-    {{-- motion spring handled by Alpine + flux:modal --}}
 >
-    {{-- Header — Stitch 787 Manajemen Buku Standardized --}}
+    {{-- Header - Stitch 787 Manajemen Buku Standardized --}}
     <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
             <h1 class="font-display text-[28px] md:text-[32px] font-semibold tracking-tight text-ink leading-tight" style="font-family: Literata, ui-serif, Georgia, serif">Manajemen Buku</h1>
             <p class="text-sm text-muted mt-1">Kelola katalog literatur perpustakaan Anda.</p>
         </div>
-        <flux:button variant="primary" icon="plus" wire:click="openCreate" class="self-start md:self-auto !bg-[#4f46e5] !rounded-[8px]">
+        <flux:button variant="primary" icon="plus" wire:click="openCreate" class="self-start md:self-auto !rounded-[8px]">
             Tambah Buku
         </flux:button>
     </div>
 
-    {{-- Filter pill + search — Stitch 787 --}}
+    {{-- Filter pill + search - Stitch 787 --}}
     <div class="mt-6 flex flex-col md:flex-row gap-3 md:items-center">
         <div class="relative flex-1 max-w-[420px]">
             <flux:input
@@ -32,7 +31,7 @@
             @foreach($categories as $cat)
                 <button
                     wire:click="setFilterPill('{{ $cat->id }}')"
-                    class="px-3.5 py-1.5 rounded-full text-xs font-medium border transition {{ $this->filterPill === (string)$cat->id ? 'bg-[#4f46e5] text-white border-[#4f46e5]' : 'bg-white text-zinc-600 border-line hover:bg-zinc-50' }}"
+                    class="px-3.5 py-1.5 rounded-full text-xs font-medium border transition {{ $this->filterPill === (string)$cat->id ? 'bg-primary text-white border-primary' : 'bg-white text-zinc-600 border-line hover:bg-zinc-50' }}"
                 >{{ $cat->name }}</button>
             @endforeach
             <button
@@ -51,7 +50,7 @@
         </div>
     </div>
 
-    {{-- Table Card — Buku | Kategori | Stok | Aksi --}}
+    {{-- Table Card - Buku | Kategori | Stok | Aksi --}}
     <div
         class="mt-6 bg-white border border-line-soft rounded-[16px] overflow-hidden shadow-[0_1px_24px_rgba(27,27,36,.07)]"
         x-data="{ stagger() { if(window.motion){ window.motion.animate('[data-row]', {opacity:[0,1], y:[6,0]}, {delay: window.motion.stagger(0.04), duration:0.18, easing:'ease-out'}) } } }"
@@ -69,11 +68,11 @@
                 </thead>
                 <tbody class="divide-y divide-zinc-100">
                     @forelse($books as $book)
-                        <tr data-row class="hover:bg-[#f5f2ff]/60 transition-colors group">
+                        <tr data-row class="hover:bg-surface/60 transition-colors group">
                             <td class="px-6 py-4">
                                 <div class="flex items-center gap-4">
                                     @if($book->cover_path)
-                                        <img src="{{ Storage::url($book->cover_path) }}" alt="cover {{ $book->title }}" class="w-12 h-16 object-cover rounded-[8px] border border-line-soft shadow-sm shrink-0" />
+                                        <img src="{{ Storage::url($book->cover_path) }}" alt="cover {{ $book->title }}" class="w-12 h-16 object-cover rounded-[8px] border border-line-soft shadow-sm shrink-0" loading="lazy" />
                                     @else
                                         <div class="w-12 h-16 rounded-[8px] border border-line-soft bg-zinc-50 grid place-items-center shrink-0 text-zinc-400">
                                             <flux:icon.photo class="w-5 h-5" />
@@ -87,7 +86,7 @@
                                 </div>
                             </td>
                             <td class="px-6 py-4">
-                                <flux:badge size="sm" color="zinc" class="!rounded-full !bg-[#4f46e5]/10 !text-[#4f46e5] !border-[#4f46e5]/15 border">
+                                <flux:badge size="sm" color="zinc" class="!rounded-full !bg-primary/10 !text-primary !border-primary/15 border">
                                     {{ $book->category->name ?? '-' }}
                                 </flux:badge>
                             </td>
@@ -121,8 +120,9 @@
         @endif
     </div>
 
-    {{-- Sheet slide flux:modal — Stitch 787 slide-over kanan --}}
-    <flux:modal wire:model.self="showForm" variant="flyout" class="md:!w-[520px] !p-0 overflow-hidden" :dismissible="false">
+    {{-- Sheet slide flux:modal - Stitch 787 slide-over kanan - motion spring scale 0.98 to 1 --}}
+    <flux:modal wire:model.self="showForm" variant="flyout" class="md:!w-[520px] !p-0 overflow-hidden data-[open]:animate-[modalSpring_220ms_cubic-bezier(0.34,1.56,0.64,1)]" :dismissible="false">
+        <style>@keyframes modalSpring{ from{opacity:0;transform:scale(0.98)} to{opacity:1;transform:scale(1)} } @media(prefers-reduced-motion:reduce){ [data-open]{animation:none !important} }</style>
         <div class="flex flex-col h-full max-h-[100dvh]">
             {{-- header --}}
             <div class="px-6 py-5 border-b border-line-soft flex items-center justify-between bg-surface shrink-0">
@@ -135,28 +135,28 @@
             {{-- body --}}
             <form wire:submit="save" class="flex-1 overflow-y-auto p-6 space-y-5 bg-white">
                 <flux:field>
-                    <flux:label>Judul Buku <span class="text-[#93000a]">*</span></flux:label>
-                    <flux:input wire:model="title" placeholder="Masukkan judul buku" required />
+                    <flux:label>Judul Buku <span class="text-error">*</span></flux:label>
+                    <flux:input wire:model="title" placeholder="Masukkan judul buku" required class="!rounded-[10px]" />
                     <flux:error name="title" />
                 </flux:field>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <flux:field>
-                        <flux:label>Penulis <span class="text-[#93000a]">*</span></flux:label>
-                        <flux:input wire:model="author" placeholder="Nama penulis" required />
+                        <flux:label>Penulis <span class="text-error">*</span></flux:label>
+                        <flux:input wire:model="author" placeholder="Nama penulis" required class="!rounded-[10px]" />
                         <flux:error name="author" />
                     </flux:field>
                     <flux:field>
-                        <flux:label>ISBN <span class="text-[#93000a]">*</span></flux:label>
-                        <flux:input wire:model="isbn" placeholder="Mis. 978-..." class="font-mono text-sm" required />
+                        <flux:label>ISBN <span class="text-error">*</span></flux:label>
+                        <flux:input wire:model="isbn" placeholder="Mis. 978-..." class="font-mono text-sm !rounded-[10px]" required />
                         <flux:error name="isbn" />
                     </flux:field>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-[1fr_130px] gap-4">
                     <flux:field>
-                        <flux:label>Kategori <span class="text-[#93000a]">*</span></flux:label>
-                        <flux:select wire:model="category_id" placeholder="Pilih kategori" required>
+                        <flux:label>Kategori <span class="text-error">*</span></flux:label>
+                        <flux:select wire:model="category_id" placeholder="Pilih kategori" required class="!rounded-[10px]">
                             @foreach($categories as $cat)
                                 <flux:select.option value="{{ $cat->id }}">{{ $cat->name }}</flux:select.option>
                             @endforeach
@@ -164,21 +164,21 @@
                         <flux:error name="category_id" />
                     </flux:field>
                     <flux:field>
-                        <flux:label>Stok <span class="text-[#93000a]">*</span></flux:label>
-                        <flux:input type="number" wire:model="stock" min="0" required />
+                        <flux:label>Stok <span class="text-error">*</span></flux:label>
+                        <flux:input type="number" wire:model="stock" min="0" required class="!rounded-[10px]" />
                         <flux:error name="stock" />
                     </flux:field>
                 </div>
 
                 <flux:field>
                     <flux:label>Tahun terbit</flux:label>
-                    <flux:input type="number" wire:model="published_year" placeholder="2024" />
+                    <flux:input type="number" wire:model="published_year" placeholder="2024" class="!rounded-[10px]" />
                     <flux:error name="published_year" />
                 </flux:field>
 
                 <flux:field>
                     <flux:label>Deskripsi Singkat</flux:label>
-                    <flux:textarea wire:model="description" rows="4" placeholder="Sinopsis atau catatan admin..." />
+                    <flux:textarea wire:model="description" rows="4" placeholder="Sinopsis atau catatan admin..." class="!rounded-[10px]" />
                     <flux:error name="description" />
                 </flux:field>
 
@@ -186,7 +186,7 @@
                     <flux:label>Gambar Sampul</flux:label>
                     @if($existingCover && !$cover)
                         <div class="mb-2">
-                            <img src="{{ Storage::url($existingCover) }}" alt="cover preview" class="w-20 h-28 object-cover rounded-[10px] border border-line-soft" />
+                            <img src="{{ Storage::url($existingCover) }}" alt="cover preview" class="w-20 h-28 object-cover rounded-[10px] border border-line-soft" loading="lazy" />
                             <p class="text-xs text-muted mt-1">Sampul saat ini</p>
                         </div>
                     @endif
@@ -194,34 +194,33 @@
                         <div class="mb-2 text-xs text-emerald-700">File terpilih: {{ $cover->getClientOriginalName() }}</div>
                     @endif
                     <div
-                        class="border-2 border-dashed border-line rounded-[12px] p-6 flex flex-col items-center justify-center bg-surface hover:bg-[#f5f2ff] transition-colors cursor-pointer group"
+                        class="border-2 border-dashed border-line rounded-[12px] p-6 flex flex-col items-center justify-center bg-surface hover:bg-surface/80 transition-colors cursor-pointer group"
                         x-data="{ dragover:false }"
                         @dragover.prevent="dragover=true"
                         @dragleave="dragover=false"
                         @drop.prevent="dragover=false"
-                        :class="dragover ? 'border-[#4f46e5] bg-[#4f46e5]/5' : ''"
+                        :class="dragover ? 'border-primary bg-primary/5' : ''"
                     >
-                        <div class="w-12 h-12 rounded-full bg-zinc-100 grid place-items-center mb-3 group-hover:bg-[#4f46e5]/10 transition-colors">
-                            <flux:icon.cloud-arrow-up class="w-6 h-6 text-zinc-400 group-hover:text-[#4f46e5]" />
+                        <div class="w-12 h-12 rounded-full bg-zinc-100 grid place-items-center mb-3 group-hover:bg-primary/10 transition-colors">
+                            <flux:icon.cloud-arrow-up class="w-5 h-5 text-zinc-400 group-hover:text-primary" />
                         </div>
                         <label class="text-sm text-ink text-center cursor-pointer">
-                            <span class="font-semibold text-[#4f46e5]">Klik untuk unggah</span> atau seret dan lepas
+                            <span class="font-semibold text-primary">Klik untuk unggah</span> atau seret dan lepas
                             <input type="file" wire:model="cover" accept="image/*" class="hidden" />
                         </label>
                         <p class="text-xs text-muted mt-1">PNG, JPG atau WEBP (Maks. 2MB)</p>
                     </div>
                     <flux:error name="cover" />
-                    {{-- native file input fallback for Livewire --}}
-                    <flux:input type="file" wire:model="cover" accept="image/jpeg,image/png,image/jpg,image/webp" class="mt-3" />
+                    <flux:input type="file" wire:model="cover" accept="image/jpeg,image/png,image/jpg,image/webp" class="mt-3 !rounded-[10px]" />
                 </flux:field>
             </form>
 
             {{-- footer --}}
             <div class="px-6 py-4 border-t border-line-soft bg-surface flex justify-end gap-3 shrink-0">
                 <flux:button variant="ghost" wire:click="closeForm" class="!rounded-[8px]">Batal</flux:button>
-                <flux:button variant="primary" wire:click="save" class="!bg-[#4f46e5] !rounded-[8px]">
+                <flux:button variant="primary" wire:click="save" class="!rounded-[8px]">
                     <span wire:loading.remove wire:target="save,cover">{{ $editingId ? 'Perbarui Buku' : 'Simpan Buku' }}</span>
-                    <span wire:loading wire:target="save">Menyimpan…</span>
+                    <span wire:loading wire:target="save">Menyimpan...</span>
                 </flux:button>
             </div>
         </div>
