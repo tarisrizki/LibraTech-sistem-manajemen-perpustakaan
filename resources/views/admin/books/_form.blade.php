@@ -1,0 +1,13 @@
+@php $editing = isset($book) && $book->exists; @endphp
+<div class="space-y-4">
+    <label class="block text-sm"><span class="text-zinc-700">Kategori</span><select name="category_id" required class="mt-1 w-full border border-zinc-200 rounded-xl px-3 py-2.5 text-sm bg-white" focus:border-indigo-300 focus:ring-2 focus:ring-indigo-100 outline-none><option value="">Pilih kategori</option>@foreach($categories as $cat)<option value="{{ $cat->id }}" @selected(old('category_id', $book->category_id ?? '')==$cat->id)>{{ $cat->name }}</option>@endforeach</select></label>
+    <label class="block text-sm"><span class="text-zinc-700">Judul</span><input type="text" name="title" value="{{ old('title', $book->title ?? '') }}" required class="mt-1 w-full border border-zinc-200 rounded-xl px-3 py-2.5 text-sm" focus:border-indigo-300 focus:ring-2 focus:ring-indigo-100 outline-none></label>
+    <label class="block text-sm"><span class="text-zinc-700">Penulis</span><input type="text" name="author" value="{{ old('author', $book->author ?? '') }}" required class="mt-1 w-full border border-zinc-200 rounded-xl px-3 py-2.5 text-sm" focus:border-indigo-300 focus:ring-2 focus:ring-indigo-100 outline-none></label>
+    <label class="block text-sm"><span class="text-zinc-700">ISBN</span><input type="text" name="isbn" value="{{ old('isbn', $book->isbn ?? '') }}" required class="mt-1 w-full border border-zinc-200 rounded-xl px-3 py-2.5 text-sm" focus:border-indigo-300 focus:ring-2 focus:ring-indigo-100 outline-none></label>
+    <div class="grid grid-cols-2 gap-3">
+        <label class="block text-sm"><span class="text-zinc-700">Stok</span><input type="number" name="stock" value="{{ old('stock', $book->stock ?? 0) }}" min="0" required class="mt-1 w-full border border-zinc-200 rounded-xl px-3 py-2.5 text-sm" focus:border-indigo-300 focus:ring-2 focus:ring-indigo-100 outline-none></label>
+        <label class="block text-sm"><span class="text-zinc-700">Tahun terbit</span><input type="number" name="published_year" value="{{ old('published_year', $book->published_year ?? '') }}" class="mt-1 w-full border border-zinc-200 rounded-xl px-3 py-2.5 text-sm" focus:border-indigo-300 focus:ring-2 focus:ring-indigo-100 outline-none></label>
+    </div>
+    <label class="block text-sm"><span class="text-zinc-700">Deskripsi</span><textarea name="description" rows="3" class="mt-1 w-full border border-zinc-200 rounded-xl px-3 py-2.5 text-sm" focus:border-indigo-300 focus:ring-2 focus:ring-indigo-100 outline-none>{{ old('description', $book->description ?? '') }}</textarea></label>
+    <label class="block text-sm"><span class="text-zinc-700">Cover (opsional, max 2MB)</span><input type="file" name="cover" accept="image/*" class="mt-1 w-full text-sm"></label>
+</div>
